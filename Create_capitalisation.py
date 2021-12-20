@@ -16,7 +16,7 @@ sheets = ['NZX50 smartshares 30 Sep 2020', '09 Oct 2020', '16 Oct 2020', '23 Oct
           '15 Oct 2021', '22 Oct 2021', '29 Oct 2021', '05 Nov 2021', '12 Nov 2021', '19 Nov 2021', '26 Nov 2021',
           '03 Dec 2021', '10 Dec 2021']
 
-wb = openpyxl.load_workbook('C:/Users/ken/Desktop/NZX 50.xlsx', read_only=True, data_only=True)
+wb = openpyxl.load_workbook('C:/Users/NZX 50.xlsx', read_only=True, data_only=True)
 
 for ticker in tickers:
     print(f'retrieving {ticker}')
