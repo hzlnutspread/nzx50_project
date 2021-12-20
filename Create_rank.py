@@ -6,7 +6,7 @@ tickers = ['fph', 'aia', 'spk', 'mft', 'cen', 'ift', 'fbu', 'mel', 'rym', 'ebo',
            'kmd', 'peb', 'spg', 'oca', 'air', 'scl', 'sko', 'ipl', 'vgl', 'nzx', 'tpw', 'rbd', 'skt', 'fsf', 'san',
            'thl', 'sml', 'nph']
 
-wb = openpyxl.load_workbook('C:/Users/NZX 50.xlsx', read_only=True)
+wb = openpyxl.load_workbook('C:/Users/user/NZX 50.xlsx', read_only=True)
 
 for ticker in tickers:
 
