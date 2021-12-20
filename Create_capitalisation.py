@@ -35,7 +35,7 @@ for ticker in tickers:
     df = pd.DataFrame(arr, columns=['Date', 'Capitalisation'])
     df.to_csv(f'./csvs/{ticker}-cap.csv', header=False, index=False)
 
-#create the cap change% csvs
+# create the cap change% csvs
 for ticker in tickers:
     print(f'opening {ticker}-cap')
 
