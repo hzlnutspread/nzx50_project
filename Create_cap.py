@@ -6,7 +6,7 @@ tickers = ['fph', 'aia', 'spk', 'mft', 'cen', 'ift', 'fbu', 'mel', 'rym', 'ebo',
            'kmd', 'peb', 'spg', 'oca', 'air', 'scl', 'sko', 'ipl', 'vgl', 'nzx', 'tpw', 'rbd', 'skt', 'fsf', 'san',
            'thl', 'sml', 'nph']
 
-wb = openpyxl.load_workbook('C:/Users/ken/Desktop/NZX 50.xlsx', read_only=True, data_only=True)
+wb = openpyxl.load_workbook('C:/Users/__/Desktop/NZX 50.xlsx', read_only=True, data_only=True)
 
 # create the cap csvs
 for ticker in tickers:
