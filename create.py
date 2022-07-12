@@ -5,8 +5,8 @@ import openpyxl
 
 # list of companies
 tickers = ['fph', 'aia', 'spk', 'mft', 'cen', 'ift', 'mel', 'fbu', 'rym', 'ebo', 'atm', 'mcy', 'cnu', 'sum', 'gmt',
-           'skc', 'pot', 'fre', 'pct', 'kpg', 'zel', 'gne', 'pfi', 'arg', 'pph', 'hgh', 'vhp', 'skl', 'arv', 'vct',
-           'kmd', 'spg', 'oca', 'peb', 'air', 'scl', 'ipl', 'sko', 'vgl', 'tpw', 'nzx', 'rbd', 'san', 'fsf', 'thl',
+           'skc', 'pot', 'fre', 'pct', 'kpg', 'whs', 'gne', 'pfi', 'arg', 'pph', 'hgh', 'vhp', 'skl', 'arv', 'vct',
+           'kmd', 'spg', 'oca', 'peb', 'air', 'scl', 'ipl', 'sko', 'vgl', 'mnw', 'nzx', 'rbd', 'san', 'fsf', 'thl',
            'sml', 'skt', 'erd']
 period1 = int(time.mktime(datetime.datetime(2016, 9, 30, 11, 59).timetuple()))
 period2 = int(time.mktime(datetime.datetime.today().timetuple()))
