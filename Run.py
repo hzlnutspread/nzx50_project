@@ -12,6 +12,7 @@ period1 = int(time.mktime(datetime.datetime(2016, 9, 30, 11, 59).timetuple()))
 period2 = int(time.mktime(datetime.datetime.today().timetuple()))
 interval = '1d'
 
+
 # create share price csv
 for ticker in tickers:
     print(f'retrieving {ticker} share price')
@@ -32,7 +33,7 @@ for ticker in tickers:
     df2.to_csv(f'./csvs/{ticker}-share-price.csv', index=False, header=False)
 
 # create capitalisation csv
-wb = openpyxl.load_workbook('C:/Users/User/Desktop/NZX 50.xlsx', read_only=True, data_only=True)
+wb = openpyxl.load_workbook('C:/Users/ken/Desktop/NZX 50.xlsx', read_only=True, data_only=True)
 
 for ticker in tickers:
     print(f'retrieving {ticker} capitalisation')
