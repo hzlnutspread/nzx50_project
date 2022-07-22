@@ -1,7 +1,10 @@
 import time
 import datetime
-import pandas as pd
 import openpyxl
+import pandas as pd
+from paramiko import *
+
+import myconstants
 
 # list of companies
 tickers = ['fph', 'aia', 'spk', 'mft', 'cen', 'ift', 'mel', 'fbu', 'rym', 'ebo', 'atm', 'mcy', 'cnu', 'sum', 'gmt',
@@ -12,8 +15,13 @@ period1 = int(time.mktime(datetime.datetime(2016, 9, 30, 11, 59).timetuple()))
 period2 = int(time.mktime(datetime.datetime.today().timetuple()))
 interval = '1d'
 
+# connect to SFTP server
+host = 'nfs.interest.co.nz'
+transport = Transport(host)
+transport.connect(None, username=myconstants.USERNAME, password=myconstants.PASSWORD)
+sftp = SFTPClient.from_transport(transport)
 
-# create share price csv
+# 1. create share price csv
 for ticker in tickers:
     print(f'retrieving {ticker} share price')
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{ticker}.NZ?period1={period1}&period2={period2}' \
@@ -29,12 +37,16 @@ for ticker in tickers:
             arr.append(subarr)
 
     df2 = pd.DataFrame(arr, columns=['Date', 'Close'])
+    df2.to_csv(f'//SERVER/jdjl/interest-nz/interest.co.nz/chart_data/investing/{ticker}-share-price.csv', index=False,
+               header=False)
 
-    df2.to_csv(f'./csvs/{ticker}-share-price.csv', index=False, header=False)
+    # upload the files to server
+    local_shareprice = f'K:\\interest-nz\\interest.co.nz\\chart_data\\investing\\{ticker}-share-price.csv'
+    remote_shareprice = f'/var/www/drupal8.interest.co.nz/web/sites/default/files/charts-csv/chart_data/investing/{ticker}-share-price.csv'
+    sftp.put(local_shareprice, remote_shareprice)
 
-# create capitalisation csv
-wb = openpyxl.load_workbook('C:/Users/ken/Desktop/NZX 50.xlsx', read_only=True, data_only=True)
-
+# 2. create capitalisation csv
+wb = openpyxl.load_workbook('C:/Users/User/Desktop/NZX 50.xlsx', read_only=True, data_only=True)
 for ticker in tickers:
     print(f'retrieving {ticker} capitalisation')
 
@@ -59,13 +71,19 @@ for ticker in tickers:
                     break
 
     df = pd.DataFrame(arr, columns=['Date', 'Capitalisation'])
-    df.to_csv(f'./csvs/{ticker}-cap.csv', header=False, index=False)
+    df.to_csv(f'//SERVER/jdjl/interest-nz/interest.co.nz/chart_data/investing/{ticker}-cap.csv', header=False,
+              index=False)
 
-# create cap $ change csv
+    # upload the files to server
+    local_cap = f'K:\\interest-nz\\interest.co.nz\\chart_data\\investing\\{ticker}-cap.csv'
+    remote_cap = f'/var/www/drupal8.interest.co.nz/web/sites/default/files/charts-csv/chart_data/investing/{ticker}-cap.csv'
+    sftp.put(local_cap, remote_cap)
+
+# 3. create cap $ change csv
 for ticker in tickers:
     print(f'creating {ticker} cap $ change')
 
-    cap_csv = f'./csvs/{ticker}-cap.csv'
+    cap_csv = f'//SERVER/jdjl/interest-nz/interest.co.nz/chart_data/investing/{ticker}-cap.csv'
     df = pd.read_csv(cap_csv)
 
     df.columns = ['Date', 'Cap']
@@ -77,14 +95,19 @@ for ticker in tickers:
     df3 = pd.DataFrame(cap_change, columns=['Cap'])
     df4 = pd.concat([df2, df3], axis=1)
     df5 = df4.drop(index=0)
+    df5.to_csv(f'//SERVER/jdjl/interest-nz/interest.co.nz/chart_data/investing/{ticker}-cap-$change.csv', index=False,
+               header=False)
 
-    df5.to_csv(f'./csvs/{ticker}-cap-$change.csv', index=False, header=False)
+    # upload the files to server
+    local_capabschange = f'K:\\interest-nz\\interest.co.nz\\chart_data\\investing\\{ticker}-cap-$change.csv'
+    remote_capabschange = f'/var/www/drupal8.interest.co.nz/web/sites/default/files/charts-csv/chart_data/investing/{ticker}-cap-$change.csv'
+    sftp.put(local_capabschange, remote_capabschange)
 
-# create cap % change csv
+# 4. create cap % change csv
 for ticker in tickers:
     print(f'creating {ticker} cap % change')
 
-    cap_csv = f'./csvs/{ticker}-cap.csv'
+    cap_csv = f'//SERVER/jdjl/interest-nz/interest.co.nz/chart_data/investing/{ticker}-cap.csv'
     df = pd.read_csv(cap_csv)
 
     df.columns = ['Date', 'Cap']
@@ -96,10 +119,15 @@ for ticker in tickers:
     df3 = pd.DataFrame(cap_change, columns=['Cap'])
     df4 = pd.concat([df2, df3], axis=1)
     df5 = df4.drop(index=0)
+    df5.to_csv(f'//SERVER/jdjl/interest-nz/interest.co.nz/chart_data/investing/{ticker}-cap-change.csv', index=False,
+               header=False)
 
-    df5.to_csv(f'./csvs/{ticker}-cap-change.csv', index=False, header=False)
+    # upload the files to server
+    local_capchange = f'K:\\interest-nz\\interest.co.nz\\chart_data\\investing\\{ticker}-cap-change.csv'
+    remote_capchange = f'/var/www/drupal8.interest.co.nz/web/sites/default/files/charts-csv/chart_data/investing/{ticker}-cap-change.csv'
+    sftp.put(local_capchange, remote_capchange)
 
-# create rank csv
+# 5. create rank csv
 for ticker in tickers:
     print(f'retrieving {ticker} rank')
 
@@ -124,4 +152,12 @@ for ticker in tickers:
                     break
 
     df = pd.DataFrame(arr, columns=['Date', 'Rank'])
-    df.to_csv(f'./csvs/{ticker}-rank.csv', index=False, header=False)
+    df.to_csv(f'//SERVER/jdjl/interest-nz/interest.co.nz/chart_data/investing/{ticker}-rank.csv', index=False,
+              header=False)
+
+    # upload the files to server
+    local_rank = f'K:\\interest-nz\\interest.co.nz\\chart_data\\investing\\{ticker}-rank.csv'
+    remote_rank = f'/var/www/drupal8.interest.co.nz/web/sites/default/files/charts-csv/chart_data/investing/{ticker}-rank.csv'
+    sftp.put(local_rank, remote_rank)
+
+print("Success: Program has finished updating and uploading")
