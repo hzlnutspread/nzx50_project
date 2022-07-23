@@ -45,3 +45,25 @@ The way I plan to improve on the code is as follows:
 - Combining the capitalisation files into one <em>(completed)</em>
 - Calculating the % and $ changes using a loop (rather than the inbuild pct_change function in python).
 - Automate the creation and updating of the master <em>NZX 50.xlsx</em> file.
+
+<hr>
+
+<h1>23-July-2022 Update</h1>
+
+- Updated the project to combine all 5 of the .py files into one large file called "Run.py". 
+- Automated the process of FTP'ing the files to the website server via FileZilla.
+- Created an .exe file and a batch file to run the .exe file. Scheduled it to run every Friday via Task Scheduler in Windows.
+
+**General Comments**
+
+I took a break from coding for a couple of months and recently got back into it. I've been learning a lot of Java predominantly and now that I've come back to automating parts of my job in Python it's much easier and has taken me only a fraction of time to write new scripts than it took when I wrote my first Python script. I suppose that means I'm getting better.
+
+You will notice the BKBMScraper repo which is the newest addition to my automation scripts in python. I wrote this completely by myself, and it has saved me even more time at work which I can now dedicate to learning more coding. It's my first project where it runs completely hands-free. All I have to do is check that it ran properly. True automation!
+
+My next steps will be:
+
+- Continuing to automate more tasks at work
+- Learn CSS/HTML/JavaScript
+- Learn Solidity
+
+<hr>
